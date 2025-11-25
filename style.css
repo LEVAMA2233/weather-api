@@ -1,0 +1,114 @@
+/* 1. Estilos Generales: Fuente y Fondo limpio */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e0f7fa; /* Un azul muy clarito de fondo */
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center;     /* Centrar verticalmente */
+    height: 100vh;           /* Usar toda la altura de la pantalla */
+    margin: 0;
+}
+
+/* 2. La Tarjeta Principal (Container) */
+.weather-container {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave 3D */
+    width: 350px;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+/* 3. Inputs (Entradas de texto) */
+.input-group {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #666;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box; /* Para que el padding no rompa el ancho */
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: #007bff; /* Azul al seleccionar */
+    outline: none;
+}
+
+/* 4. Botón Principal */
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    width: 100%;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Efecto de elevación al pasar el mouse */
+}
+
+/* 5. Caja de Resultados y Animación */
+.result-box {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f1f8ff;
+    border: 1px solid #cce5ff;
+    border-radius: 8px;
+    color: #004085;
+    
+    /* Animación de entrada */
+    animation: fadeIn 0.5s ease-out;
+}
+
+.result-box p {
+    margin: 5px 0;
+    font-size: 1.1rem;
+}
+
+span {
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* Clase para ocultar elementos */
+.hidden {
+    display: none;
+}
+
+/* 6. Definición de la Animación (Keyframes) */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px); /* Empieza un poco más abajo */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);    /* Termina en su lugar */
+    }
+}
