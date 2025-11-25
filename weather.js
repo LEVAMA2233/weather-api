@@ -1,23 +1,28 @@
 console.log("Ya jala pa");
-async function fetchWeatherData( latitude, longitude) {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`;
-    const response = await fetch(url);
-    console.log(response);
-    const data = await response.json();
-    console.log(data);
-    console.log(data.elevation);
-    console.log(data.current_weather);
-    console.log(data.current_weather.temperature);
-    return data.current_weather;
-}
-// fetchWeatherData( 25.666815, -100.28233);
 async function handleFetchClick(){
     console.log("Boton fetch clickeado");
+    
     const latitude = document.getElementById("latitude-input").value;
     const longitude = document.getElementById("longitude-input").value;
-    const currentTemperature = document.getElementById("temp-display");
+    const tempDisplay = document.getElementById("temp-display");
+    const windDisplay = document.getElementById("wind-display"); // Nuevo
+    const resultBox = document.getElementById("weather-result"); // Nuevo
 
-    const currentWeather = await fetchWeatherData(latitude, longitude);
-    currentTemperature.textContent = currentWeather.temperature;
+    try {
+        // 2. Llamar a la API
+        const currentWeather = await fetchWeatherData(latitude, longitude);
 
+        // 3. Actualizar el DOM (Pantalla)
+        tempDisplay.textContent = currentWeather.temperature;
+        
+        // Agregar la velocidad del viento (la API suele devolver 'windspeed')
+        windDisplay.textContent = currentWeather.windspeed; 
+
+        // Hacer visible la caja de resultados
+        resultBox.classList.remove("hidden"); 
+
+    } catch (error) {
+        console.error("Hubo un error al obtener el clima:", error);
+        alert("No se pudo obtener el clima. Revisa tu conexión o las coordenadas.");
+    }
 }
