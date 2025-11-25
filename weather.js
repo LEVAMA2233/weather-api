@@ -1,28 +1,51 @@
 console.log("Ya jala pa");
-async function handleFetchClick(){
-    console.log("Boton fetch clickeado");
+// 1. Función auxiliar para pedir los datos a la API
+async function fetchWeatherData(latitude, longitude) {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`;
     
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Error en la respuesta de la red');
+        }
+        const data = await response.json();
+        return data.current_weather;
+    } catch (error) {
+        console.error("Error dentro de fetchWeatherData:", error);
+        throw error; // Re-lanzamos el error para que lo capture la otra función
+    }
+}
+
+// 2. Función principal que se activa con el botón
+async function handleFetchClick() {
+    console.log("Boton fetch clickeado");
+
     const latitude = document.getElementById("latitude-input").value;
     const longitude = document.getElementById("longitude-input").value;
+    
     const tempDisplay = document.getElementById("temp-display");
-    const windDisplay = document.getElementById("wind-display"); // Nuevo
-    const resultBox = document.getElementById("weather-result"); // Nuevo
+    const windDisplay = document.getElementById("wind-display");
+    const resultBox = document.getElementById("weather-result");
 
     try {
-        // 2. Llamar a la API
+        // Llamamos a la función de arriba
         const currentWeather = await fetchWeatherData(latitude, longitude);
 
-        // 3. Actualizar el DOM (Pantalla)
+        // Actualizamos los textos
         tempDisplay.textContent = currentWeather.temperature;
         
-        // Agregar la velocidad del viento (la API suele devolver 'windspeed')
-        windDisplay.textContent = currentWeather.windspeed; 
+        // Verificamos si existe el elemento de viento antes de asignar
+        if(windDisplay) {
+            windDisplay.textContent = currentWeather.windspeed;
+        }
 
-        // Hacer visible la caja de resultados
-        resultBox.classList.remove("hidden"); 
+        // Hacemos visible la caja quitando la clase 'hidden'
+        if(resultBox) {
+            resultBox.classList.remove("hidden");
+        }
 
     } catch (error) {
-        console.error("Hubo un error al obtener el clima:", error);
-        alert("No se pudo obtener el clima. Revisa tu conexión o las coordenadas.");
+        console.error("Error en handleFetchClick:", error);
+        alert("Hubo un error al obtener los datos. Verifica la consola para más detalles.");
     }
 }
